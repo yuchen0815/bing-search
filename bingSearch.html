@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<meta charset="UTF-8">
+			<title>bing search</title>
+			<style type = "text/css">
+				body{background-color: #333}
+				.bg-div{
+						background-image: url("images/bing.jpg");width:1228px;height:690px;margin:0 auto;	
+				}
+				.logo{
+						margin:-4px 18px 0 0;background-image: url("images/logo.png");width:107px;height:53px;float:left;
+				}
+				form{
+						float:left;background-color:#fff;padding:5px;
+				}
+				.inputText{
+						border : 0;float:left;height:25px;line-height:25px;outline:none;width:350px;
+				}
+				.inputButton{
+						border : 0; background-image: url("images/searchButton.png");width:29px;height:29px;
+						float: left;
+				}
+				.search-box{
+						position: absolute;top:200px;left:300px
+				}
+				.suggest{
+					width:388px;border:1px solid #999;background-color: #fff;
+				}
+				.suggest ul{
+					list-style: none;margin:0;padding:0
+				}
+				.suggest ul li{
+					padding:3px;font-size:14px;line-height: 25px;cursor:pointer;
+				}
+				.suggest ul li:hover{
+					text-decoration: underline;background-color: #e5e5e5;
+				}
+			</style>
+	</head>
+	<body>
+			<div class = "bg-div">
+				<div class = "search-box">
+					<div class = "logo"></div>
+					<form id = "search-form" target = "_blank">
+						<input type = "text" class = "inputText" id = "search-input">
+						<input type = "submit" class = "inputButton" value = "">
+					</form>
+				</div>
+				<div class = "suggest" id = "search-suggest"style="display:none;">
+					<ul>
+						<li>搜索结果1</li>
+						<li>搜索结果2</li>
+					</ul>
+				</div>
+			</div>
+			<script src = "https://code.jquery.com/jquery-3.2.1.min.js"></script>
+			<script src = "js/jQuery.js"></script>
+			<script src = "js/javascript.js"></script>
+	</body>    
+</html>

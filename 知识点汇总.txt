@@ -1,0 +1,95 @@
+一、静态页面的搭建
+
+1.<input>的type属性取为"button"或者"submit"(这两者都可以当做按钮)时，其在浏览器中有一些默认的交互效果
+	(1) 默认状态
+	(2) 鼠标悬浮状态
+	(3) 鼠标点击状态
+（具体的交互体现情况根据浏览器和操作系统的不同会展示出差异）
+
+2.<input>作为按钮时(即type属性取"button"或"submit"时),其局限性有：
+	(1)<input/>是自闭合标签，不能定义复杂样式按钮(例:图文混排按钮)(里面不能再加HTML)
+			引申：
+				可以用来制作图文混排按钮的为<button>标签
+				<button><img src="">.....</button>
+
+3.<form>表单基本构成
+	<form action = "http://www.baidu.com/s" target="_blank" method = "get">
+		(1)action属性表示我们所输入的内容会被提交到服务器中指定的端口
+		(2)将target属性设为"_blank"是指将搜索内容展示到浏览器的新标签页中
+	要形成完整的表单，需要配合使用<input>
+
+4.<input>提交按钮的默认行为(此功能,type="button"无法实现)
+	(1)<input>的type属性取为"submit"时，可以提交表单内容到服务器(无需JS代码)
+	(2)此时的<input>必须要放到<form>中
+
+5.制作过程中如果图片不显示，检查是否是没有添加宽、高值导致的
+
+6.将搜索按钮的图片加到搜索框的时候，如果给其没有说明value属性，则浏览器会默认给其添加描写文字
+解决办法是给input标签添加'value = ""'
+
+7.为使得两个容器对齐，可以设置"float:left;"
+
+8.line-height：此属性设置用于行所在的空间，对于块级元素，指定元素线框中的最小高度
+(一般情况下，取值为25px-30px最佳)
+
+9.针对于搜索框在鼠标点击状态时会显示出一个高亮状态(仅是chrome会出现),为了消除这种高亮
+设置"outline : none;"
+
+10.对于position位置属性，其有两种定位：绝对定位和相对定位
+position:absolute(绝对定位);绝对定位指当前被定位的这个元素相当于body的位置
+position:relative(相对定位);可以针对其父级元素进行定位
+
+11.css属性：cursor:pointer;(当鼠标悬浮于按钮时，光标变为"小手"形状)
+
+12.使用<ul>制作提示列表时要注意，将<ul>和<li>的默认样式要去掉(保证在不同浏览器下都有很好的交互体验，即其展示样式是一致的)
+
+13.list-style:none;(清除默认列表样式)
+
+14.text-decoration:underline(文本样式：下划线)
+
+二、智能提示动态效果实现
+	1.使用jQuery和JS脚本完成动态效果
+	2.事件绑定和事件代理(主要用来完成与用户的交互过程)
+	3.AJAX(用于和服务器交换信息)
+
+(1.)只有"事件"才能使用户进行输入、输出操作
+(2.)智能提示框的出现都是通过dom操作的
+(3.)dom操作在整个过程起操作智能提示框的内容和展现效果等
+
+（一.)jQuery实现事件绑定、DOM操作
+1.获取元素$("#id")
+2.事件绑定$("#id").on('keyup',function(){})
+(keyup,keydown,keypress都属于键盘事件,可以在浏览器里实验它们各自的区别)
+3.  show():此方法属于jQuery中的"基本效果",表示匹配的元素会立即显示(无参数时)
+4.  css():为元素设置属性,例如$("#mydiv").css("color","red")等于document.getElementById('mydiv').style.color = "red"
+5.  offset():获取第一个元素的当前坐标
+6.	height():获取匹配元素集合中第一个元素的当前计算高度或者设置每个匹配元素的高度
+7.  $(document).on('click',function(){})
+
+(二.)Ajax原理及jQuery实现
+	1.使用jQuery实现Ajax的方法：$.get(url,callback,'json')
+	url:指请求的服务器的端口的地址
+	callback:一个回调函数，从服务器返回的数据通过某种方式展现给用户
+	'json':返回数据的类型,使用'json'的数据格式让前端和服务器进行交换数据，无需对数据进行额外的编码操作就可以使JS识别
+
+2.AJAX的特点:同源策略
+	发送请求的页面url地址与请求的服务器的url地址在同一服务器下，同一域名下
+
+(三.)事件代理及jQuery实现
+	事件代理：当要对多个元素做事件绑定的时候，且这多个元素并不是通过HTML直接写在页面当中，而是通过JS
+动态生成的HTML结构，要使用事件代理
+	$(document).delegate('li','click',function())
+"li":传递的元素的名称(一般不传递id名，而是class或元素标签名)
+
+三、使用原生JS实现下拉框
+	首先做几个分装函数
+	var addEvent = function(id,event,fn){
+					var el = getDom(id)||document;
+					if(el.addEventListener){
+						el.addEventListener(event,fn,false)//event指“click”，"keydown"等
+					}else(el.attachEvent){
+						el.attachEvent('on'+event,fn)//'on'+event指它只接受"onclick","onkeydown"
+					}
+				}
+	此函数用来解决浏览器兼容性问题，addEventListener适用于非IE浏览器，attachEvent适用于IE浏览器
+这两个都表示事件追踪
